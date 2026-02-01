@@ -2,15 +2,23 @@
 
 /**
  * binary_tree_uncle - Finds the uncle of a node
- * @node: Pointer to the node to find the uncle of
+ * @node: Pointer to the node to find the uncle
  *
- * Return: Pointer to the uncle node, or NULL if no uncle
+ * Return: Pointer to the uncle node, or NULL if none
  */
 binary_tree_t *binary_tree_uncle(binary_tree_t *node)
 {
-	if (node == NULL || node->parent == NULL)
+	binary_tree_t *parent, *grandparent;
+
+	if (node == NULL || node->parent == NULL ||
+		node->parent->parent == NULL)
 		return (NULL);
 
-	/* Uncle is the sibling of the parent */
-	return (binary_tree_sibling(node->parent));
+	parent = node->parent;
+	grandparent = parent->parent;
+
+	if (grandparent->left == parent)
+		return (grandparent->right);
+
+	return (grandparent->left);
 }
